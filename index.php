@@ -3,13 +3,18 @@ $jsonString = file_get_contents("data.json");
 $jsonData = json_decode($jsonString, true);
 
 $email_inviata = false;
-
-
+$result = "";
+if (isset($_GET["result"])) {
+    $result = $_GET["result"];
+    $email_inviata = true;
+}
+/*
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $messaggio = $_POST["messaggio"];
     $email_inviata = true;
 }
+*/
 ?>
 <!DOCTYPE html>
 <html>
@@ -92,13 +97,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="wrapper">
             <h1>I Nostri Lavori</h1>
             <?php
-                $controllo = 0;
+            $controllo = 0;
             ?>
             <?php foreach ($jsonData['projects'] as $proj) { ?>
                 <?php if ($controllo == 0) { ?>
                     <div class="portfolio-row">
                     <?php }
-                        $controllo++;
+                $controllo++;
                     ?>
                     <div class="portfolio-item">
                         <img src="<?php echo $proj['image'] ?>" alt="<?php echo $proj['title'] ?>" />
@@ -116,10 +121,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <section id="contact">
         <div class="wrapper">
             <h1>Contattaci</h1>
-            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="contact-form">
-                <?php if($email_inviata) { ?>
+            <form action="/esercitazione 2 PHP-SCSS/send-email.php" method="post" class="contact-form">
+                <?php if ($email_inviata) { ?>
                     <div class="form-input">
-                        <strong>Messaggio inviato con successo!</strong>
+                        <strong><?php echo $result ?></strong>
                     </div>
                 <?php } ?>
                 <div class="form-input">
@@ -130,7 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <div class="form-input">
                     <label for="message">Messaggio</label>
                     <br>
-                    <textarea id="message" name="messaggio" rows="10" placeholder="messaggio"></textarea>
+                    <textarea id="message" name="message" rows="10" placeholder="messaggio"></textarea>
                 </div>
                 <div class="form-input">
                     <button type="submit">INVIA</button>
