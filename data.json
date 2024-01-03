@@ -2,35 +2,43 @@
     "projects": [
         {
             "image": "https://picsum.photos/id/5/1000/750",
-            "title": "Project 1"
+            "title": "Project 1",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/7/1000/750",
-            "title": "Project 2"
+            "title": "Project 2",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/13/1000/750",
-            "title": "Project 3"
+            "title": "Project 3",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/11/1000/750",
-            "title": "Project 4"
+            "title": "Project 4",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/600/1000/750",
-            "title": "Project 5"
+            "title": "Project 5",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/54/1000/750",
-            "title": "Project 6"
+            "title": "Project 6",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/89/1000/750",
-            "title": "Project 7"
+            "title": "Project 7",
+            "description": "lorem"
         },
         {
             "image": "https://picsum.photos/id/23/1000/750",
-            "title": "Project 8"
+            "title": "Project 8",
+            "description": "lorem"
         }
     ],
     "statistics": [
