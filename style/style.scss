@@ -183,6 +183,10 @@ blockquote {
                     width: 100%;
                 }
             }
+
+            .portfolio-item:hover{
+                cursor:pointer;
+            }
         }
     }
 
@@ -305,6 +309,10 @@ footer {
     /* Black w/ opacity */
 }
 
+.prj-image{
+    max-width: 100%;
+}
+
 /* Modal Content/Box */
 .modal-content {
     background-color: #fefefe;
@@ -314,14 +322,34 @@ footer {
     border: 1px solid #888;
     width: 80%;
     /* Could be more or less, depending on screen size */
+    position: relative;
+
+    .wrapper{
+        display: flex;;
+    }
+    .left{
+        width: 30%;
+    }
+
+    .text{
+        width: 70%;
+        padding: 0 15px;
+
+        h3{
+            margin-top:0;
+        }
+    }
 }
 
 /* The Close Button */
 .close {
     color: #aaa;
     float: right;
-    font-size: 28px;
+    font-size: 42px;
     font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 15px;
 }
 
 .close:hover,

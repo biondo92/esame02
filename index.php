@@ -162,88 +162,74 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Modal content -->
         <div class="modal-content">
             <span class="close">&times;</span>
-            <p id="desc"></p>
+            <h2 class="title"></h2>
+            <hr/>
+            <div class="wrapper">
+                <div class="left">
+                    <img class="prj-image" />
+                </div>
+                <div class="text">
+                    <h3>Descrizione:</h3>
+                    <p class="desc"></p>
+                </div>
+            <div>
         </div>
 
     </div>
 
 
     <script>
-        // Get the modal
+
         var modal = document.getElementById("myModal");
-        // var data = {};
+        var _projects;
+
+        // questa chiamata recupera i dati dal file .json
         fetch('data.json')
-            .then((response) => response.json())
-            .then(function(json) {
+        .then((response) => response.json())
+        .then(function(json) {
+            _projects = json.projects;
+        });
 
-                var projects = document.getElementsByClassName("portfolio-item");
-                for (var i = 0; i < projects.length; i++) {
-                    var box = projects[i];
-                    box.onclick = function() {
-                        var id = box.getAttribute("data-project-id");
-                        var proj = json.projects[id];
-                        modal.style.display = "block";
-                        var desc = modal.getElementsByTagName("p");
-                        desc[0].innerHTML = proj.description + " " + id;
-                        // console.log(json[id]);
+        // prendiamo tutti gli elementi con classe portfolio-item
+        var projects = document.getElementsByClassName("portfolio-item");
+        for (var i = 0; i < projects.length; i++) {
+            var box = projects[i];
 
-                    }
-                }
+            // impostiamo la funzione di callback da invocare quando l'utente fa click sul box
+            box.onclick = function(event) {
 
+                // recuperiamo l'indice del box sul quale è stato fatto click
+                var id = event.target.parentElement.getAttribute("data-project-id");
 
-                // Get the <span> element that closes the modal
-                var span = document.getElementsByClassName("close")[0];
+                // rendiamo visibile il modal
+                modal.style.display = "block";
 
-                // When the user clicks on the button, open the modal
+                // recuperiamo gli elementi html che andremo a popolare con i dati relativi al progetto associato all'indice recuperato in precedenza
+                var desc = modal.getElementsByClassName("desc");
+                var title = modal.getElementsByClassName("title");
+                var img = modal.getElementsByClassName("prj-image");
 
+                // impostiamo i valori
+                desc[0].innerHTML = _projects[id].description;
+                title[0].innerHTML = _projects[id].title;
+                img[0].src = _projects[id].image;
+            }
+        }
 
-                // When the user clicks on <span> (x), close the modal
-                span.onclick = function() {
-                    modal.style.display = "none";
-                }
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("close")[0];
 
-                // When the user clicks anywhere outside of the modal, close it
-                window.onclick = function(event) {
-                    if (event.target == modal) {
-                        modal.style.display = "none";
-                    }
-                }
-            });
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
 
-        // Get the button that opens the modal
-        // var projects = document.getElementsByClassName("portfolio-item");
-        // console.log(projects);
-        // for (var i = 0; i < projects.length; i++) {
-        //     var box = projects[i];
-        //     box.onclick = function() {
-        //         var id = box.getAttribute("data-project-id");
-        //         var proj = data[id];
-        //         modal.style.display = "block";
-        //         var desc = modal.getElementsByTagName("p");
-        //         // desc[0].innerHTML = proj.description + " " + id;
-        //         console.log(data[id]);
-
-        //     }
-        // }
-
-
-        // // Get the <span> element that closes the modal
-        // var span = document.getElementsByClassName("close")[0];
-
-        // // When the user clicks on the button, open the modal
-
-
-        // // When the user clicks on <span> (x), close the modal
-        // span.onclick = function() {
-        //     modal.style.display = "none";
-        // }
-
-        // // When the user clicks anywhere outside of the modal, close it
-        // window.onclick = function(event) {
-        //     if (event.target == modal) {
-        //         modal.style.display = "none";
-        //     }
-        // }
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     </script>
 </body>
 
