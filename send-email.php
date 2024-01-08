@@ -29,6 +29,7 @@ if ($to == "" || $mex == "") {
 $mail = new PHPMailer(true);
 try {
     // Configure the PHPMailer instance
+    $mail->SMTPDebug = 2;
     $mail->isSMTP();
     $mail->Host = HOST;
     $mail->SMTPAuth = true;
@@ -40,10 +41,11 @@ try {
     // Set the sender, recipient, subject, and body of the message
 
     $mail->From = USERNAME;
+    $mail->setFrom(USERNAME, 'no-reply');
 
     $mail->addAddress($to);
-    $mail->Subject = "INVIO EMAIL DAL SITO AEZMA 2021";
     $mail->isHTML(false);
+    $mail->Subject = "INVIO EMAIL DAL SITO AEZMA 2021";
     $mail->Body = $mex;
 
     // Send the message
