@@ -2,7 +2,7 @@
 const HOST = "smtp.gmail.com";
 const PORT = 587;
 const USERNAME = "micheleiacuitto92@gmail.com";
-const PASS = "Aezma1992";
+const PASS = "";
 
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -40,7 +40,6 @@ try {
 
     // Set the sender, recipient, subject, and body of the message
 
-    $mail->From = USERNAME;
     $mail->setFrom(USERNAME, 'no-reply');
 
     $mail->addAddress($to);
