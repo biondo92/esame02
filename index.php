@@ -4,9 +4,23 @@ $jsonData = json_decode($jsonString, true);
 
 $email_inviata = false;
 $result = "";
+$email = "";
+$email_error = false;
+$mex = "";
+$mex_error = false;
 if (isset($_GET["result"])) {
     $result = $_GET["result"];
     $email_inviata = true;
+    if (!isset($_GET["email"])) {
+        $email_error = true;
+    } else {
+        $email = $_GET["email"];
+    }
+    if (!isset($_GET["messaggio"])) {
+        $mex_error = true;
+    } else {
+        $mex = $_GET["messaggio"];
+    }
 }
 /*
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -124,18 +138,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <form action="/esercitazione 2 PHP-SCSS/send-email.php" method="post" class="contact-form">
                 <?php if ($email_inviata) { ?>
                     <div class="form-input">
-                        <strong><?php echo $result ?></strong>
+                        <strong class="validation-error"><?php echo $result ?></strong>
                     </div>
                 <?php } ?>
                 <div class="form-input">
                     <label for="email">Email</label>
                     <br>
-                    <input id="email" type="email" name="email" placeholder="email">
+                    <?php if ($email_error) { ?>
+
+                        <input class="invalid" value="<?php echo $email ?>" id="email" type="email" name="email" placeholder="email">
+                    <?php } else { ?>
+                        <input value="<?php echo $email ?>" id="email" type="email" name="email" placeholder="email">
+                    <?php } ?>
                 </div>
                 <div class="form-input">
                     <label for="message">Messaggio</label>
                     <br>
-                    <textarea id="message" name="message" rows="10" placeholder="messaggio"></textarea>
+                    <?php if ($mex_error) { ?>
+                        <textarea class="invalid" id="message" name="message" rows="10" placeholder="messaggio"><?php echo trim($mex) ?></textarea>
+                    <?php } else { ?>
+                        <textarea id="message" name="message" rows="10" placeholder="messaggio"><?php echo trim($mex) ?></textarea>
+                    <?php } ?>
                 </div>
                 <div class="form-input">
                     <button type="submit">INVIA</button>
@@ -163,7 +186,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2 class="title"></h2>
-            <hr/>
+            <hr />
             <div class="wrapper">
                 <div class="left">
                     <img class="prj-image" />
@@ -172,65 +195,64 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <h3>Descrizione:</h3>
                     <p class="desc"></p>
                 </div>
-            <div>
-        </div>
+                <div>
+                </div>
 
-    </div>
+            </div>
 
 
-    <script>
+            <script>
+                var modal = document.getElementById("myModal");
+                var _projects;
 
-        var modal = document.getElementById("myModal");
-        var _projects;
+                // questa chiamata recupera i dati dal file .json
+                fetch('data.json')
+                    .then((response) => response.json())
+                    .then(function(json) {
+                        _projects = json.projects;
+                    });
 
-        // questa chiamata recupera i dati dal file .json
-        fetch('data.json')
-        .then((response) => response.json())
-        .then(function(json) {
-            _projects = json.projects;
-        });
+                // prendiamo tutti gli elementi con classe portfolio-item
+                var projects = document.getElementsByClassName("portfolio-item");
+                for (var i = 0; i < projects.length; i++) {
+                    var box = projects[i];
 
-        // prendiamo tutti gli elementi con classe portfolio-item
-        var projects = document.getElementsByClassName("portfolio-item");
-        for (var i = 0; i < projects.length; i++) {
-            var box = projects[i];
+                    // impostiamo la funzione di callback da invocare quando l'utente fa click sul box
+                    box.onclick = function(event) {
 
-            // impostiamo la funzione di callback da invocare quando l'utente fa click sul box
-            box.onclick = function(event) {
+                        // recuperiamo l'indice del box sul quale è stato fatto click
+                        var id = event.target.parentElement.getAttribute("data-project-id");
 
-                // recuperiamo l'indice del box sul quale è stato fatto click
-                var id = event.target.parentElement.getAttribute("data-project-id");
+                        // rendiamo visibile il modal
+                        modal.style.display = "block";
 
-                // rendiamo visibile il modal
-                modal.style.display = "block";
+                        // recuperiamo gli elementi html che andremo a popolare con i dati relativi al progetto associato all'indice recuperato in precedenza
+                        var desc = modal.getElementsByClassName("desc");
+                        var title = modal.getElementsByClassName("title");
+                        var img = modal.getElementsByClassName("prj-image");
 
-                // recuperiamo gli elementi html che andremo a popolare con i dati relativi al progetto associato all'indice recuperato in precedenza
-                var desc = modal.getElementsByClassName("desc");
-                var title = modal.getElementsByClassName("title");
-                var img = modal.getElementsByClassName("prj-image");
+                        // impostiamo i valori
+                        desc[0].innerHTML = _projects[id].description;
+                        title[0].innerHTML = _projects[id].title;
+                        img[0].src = _projects[id].image;
+                    }
+                }
 
-                // impostiamo i valori
-                desc[0].innerHTML = _projects[id].description;
-                title[0].innerHTML = _projects[id].title;
-                img[0].src = _projects[id].image;
-            }
-        }
+                // Get the <span> element that closes the modal
+                var span = document.getElementsByClassName("close")[0];
 
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
+                // When the user clicks on <span> (x), close the modal
+                span.onclick = function() {
+                    modal.style.display = "none";
+                }
 
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
+                // When the user clicks anywhere outside of the modal, close it
+                window.onclick = function(event) {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                }
+            </script>
 </body>
 
 </html>

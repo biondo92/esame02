@@ -314,3 +314,12 @@ footer ul li {
     text-decoration: none;
     cursor: pointer;
 }
+
+.validation-error {
+    color: red;
+    font-size: larger;
+}
+
+.invalid {
+    border: 3px solid red;
+}

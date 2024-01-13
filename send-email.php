@@ -14,16 +14,50 @@ require './src/SMTP.php';
 $to = "";
 $mex = "";
 $result = "";
+$isinvalid = false;
+
 if (isset($_POST["email"])) {
     $to = $_POST["email"];
+    if (!filter_var($to, FILTER_VALIDATE_EMAIL)) {
+        $result .= "Campo email non valido <br/>";
+        $isinvalid = true;
+        $to = "";
+    }
+} else {
+    $result .= "Campo email obbligatorio <br/>";
+    $isinvalid = true;
+    $to = "";
 }
 
 if (isset($_POST["message"])) {
     $mex = $_POST["message"];
-}
-if ($to == "" || $mex == "") {
 
-    $result = "impossibile procedere campi mancanti";
+    if (empty($mex)) {
+        $result .= "Campo messaggio non può essere vuoto <br/>";
+        $isinvalid = true;
+        $mex = "";
+    } else {
+        if (filter_var($mex, FILTER_SANITIZE_STRING)) {
+            $result .= "Campo messaggio contiene caratteri non consentiti <br/>";
+            $isinvalid = true;
+            $mex = "";
+        }
+        if (strlen($mex) > 120) {
+            $result .= "Campo messaggio eccede il numero di caratteri consentito : max 120 <br/>";
+            $isinvalid = true;
+            $mex = "";
+        }
+    }
+} else {
+    $result .= "Campo messaggio obbligatorio <br/>";
+    $isinvalid = true;
+    $mex = "";
+}
+
+if ($isinvalid) {
+
+    $result .= "impossibile procedere sono presenti errori di validazione";
+    header("location: /esercitazione 2 PHP-SCSS/index.php?result=$result&email=$to&messaggio=$mex");
 }
 
 $mail = new PHPMailer(true);

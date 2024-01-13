@@ -184,8 +184,8 @@ blockquote {
                 }
             }
 
-            .portfolio-item:hover{
-                cursor:pointer;
+            .portfolio-item:hover {
+                cursor: pointer;
             }
         }
     }
@@ -309,7 +309,7 @@ footer {
     /* Black w/ opacity */
 }
 
-.prj-image{
+.prj-image {
     max-width: 100%;
 }
 
@@ -324,19 +324,21 @@ footer {
     /* Could be more or less, depending on screen size */
     position: relative;
 
-    .wrapper{
-        display: flex;;
+    .wrapper {
+        display: flex;
+        ;
     }
-    .left{
+
+    .left {
         width: 30%;
     }
 
-    .text{
+    .text {
         width: 70%;
         padding: 0 15px;
 
-        h3{
-            margin-top:0;
+        h3 {
+            margin-top: 0;
         }
     }
 }
@@ -357,4 +359,15 @@ footer {
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+
+
+.validation-error {
+    color: red;
+    font-size: larger;
+}
+
+.invalid {
+    border: 3px solid red;
 }
